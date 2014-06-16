@@ -4,16 +4,13 @@
 # See the LICENSE for more information.
 from __future__ import (print_function, division, absolute_import, unicode_literals)
 
-from setuptools import setup, find_packages
+from setuptools import setup
 
 # Get app version
 with open('formica/version.py', 'rb') as fp:
     g = {}
     exec(fp.read(), g)
     version = g['__version__']
-
-# Get package list and make app name mapping
-packages = find_packages(exclude=['*.tests'])
 
 
 # Read README file
@@ -34,9 +31,9 @@ setup(
     long_description=readme(),
     keywords='django forms templates',
     install_requires=[
-        'django',
+        'django>=1.4',
     ],
-    packages=packages,
+    packages=['formica', 'formica.templatetags'],
     include_package_data=True,
     zip_safe=False,
     test_suite='tests.runtests',
@@ -52,6 +49,11 @@ setup(
         'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.2',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ],
