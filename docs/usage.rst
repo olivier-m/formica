@@ -7,9 +7,7 @@ Installation
 
 Formica is tested with Django version 1.4 to 1.6 and with Python version 2.6, 2.7, 3.2, 3.3 and 3.4.
 
-Install Formica package from pypi using Pip (or wathever you like):
-
-::
+To install Formica package from pypi using Pip::
 
   pip install formica
 
