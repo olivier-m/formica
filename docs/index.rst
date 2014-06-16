@@ -1,6 +1,6 @@
-=======================
-Formica's documentation
-=======================
+=======
+Formica
+=======
 
 Contents:
 
