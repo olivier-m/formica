@@ -11,6 +11,10 @@
 
 <div id="other_form">
 {% form "formica/base_form.html" other_form with_csrf=False check__class="checkbox" %}
+  {% set check__title="check title" %}
   {% fields email__size=40 email__wrapper_class="wrapped" %}
 {% endform %}
+
+<div id="void">{{ check__title }}</div>
+
 {% endblock content %}

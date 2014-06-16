@@ -54,7 +54,10 @@ class FormicaTestCase(TestCase):
         self.assertTag(d, '#other_form input#id_other-email[size="40"]')
         self.assertTag(d, '#other_form div.field.wrapped input#id_other-email')
         self.assertTag(d, '#other_form input#id_other-check[class=checkbox]')
+        self.assertTag(d, '#other_form input#id_other-check[title="check title"]')
         self.assertTag(d, '#other_form input[name=csrfmiddlewaretoken]', 0)
+
+        self.assertEqual('', d('#void').text())
 
     def test_table(self):
         r = self.client.get('/table')

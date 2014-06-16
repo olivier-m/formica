@@ -264,6 +264,15 @@ def useblock(context, block_name, **kwargs):
         return block.render(context)
 
 
+@register.simple_tag(name='set', takes_context=True)
+def _set(context, **kwargs):
+    last_context = context.dicts[-1:]
+    if len(last_context) > 0:
+        last_context[0].update(**kwargs)
+
+    return ''
+
+
 #
 # Filters
 #
