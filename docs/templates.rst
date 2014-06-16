@@ -9,11 +9,11 @@ formica/base_form.html
 **********************
 
 This is the base Formica template. It produces a pretty decent form with a **div** element for
-each form, shows errors, add CSRF prevention. It tries to be simple and covers all needs but I'm
+each form, shows errors, adds CSRF prevention. It tries to be simple and covers all needs but I'm
 sure you will change it to match your CSS.
 :ref:`Customisation and contributions<contrib>` for CSS frameworks are welcome :)
 
-Here is an example of produced code with this template:
+Here is an example of code produced with this template:
 
 Template:
 ---------
@@ -54,8 +54,8 @@ Render to:
 
 Using this template, here are some interesting variables:
 
-- **{{ wrapper_class }}**: add classes to **div.field** element (used by **field** block)
-- **{{ with_csrf }}**: add CSRF field (true by default)
+- **{{ wrapper_class }}**: adds classes to **div.field** element (used by **field** block)
+- **{{ with_csrf }}**: adds CSRF field (true by default)
 
 
 formica/table_form.html
@@ -118,7 +118,7 @@ Formsets
 
 Formsets are easy to handle with Formica, including tabular formset layouts.
 
-The most easy way, using a for loop (without management form and errors):
+The easiest way, using a for loop (without management form nor error support):
 
 .. code-block:: django
 
@@ -160,7 +160,7 @@ It becomes:
 Customize templates
 ===================
 
-You need 3 templates blocks only to render templates with Formica. Here are their descriptions and
+You need only 3 templates blocks to render templates with Formica. Here are their descriptions and
 context they receive.
 
 form
@@ -205,7 +205,7 @@ field
 *****
 
 This block renders the field itself. This is where you usually make the hard work to render your
-HTML tags. It receive the following template variables:
+HTML tags. It receives the following template variables:
 
 - **{{ field }}**: The field instance
 - **{{ form }}**: The form instance (comming from **{% form %}** tag)

@@ -23,7 +23,7 @@ Template tags
 ----------
 
 **{% form %}** is the main template tag you use when rendering a single form. It basically loads a
-template, sets a new context and render what's inside the tag. If we have a form named
+template, sets a new context and renders what's inside the tag. If we have a form named
 **{{ my_form }}** in our website template and we want to render it using ``formica/base_form.html``
 template, we add this in our website template:
 
@@ -61,7 +61,7 @@ list in order to let you choose which fields to render and/or their order. Here 
     {% fields "-name, -email" %}
   {% endform %}
 
-As you can see, you can specify which fields to display or to hide (using minus sign before the
+As you can see, you can specify which fields to display or hide (using minus sign before the
 name). You can use any combination you like. If the field list argument is not provided or is empty,
 all form fields are rendered.
 
@@ -133,9 +133,9 @@ starts with **data_**, would be added to the field widget attributes. Here is an
     {% field "firstname" wrapper_class="inline" %}
   {% endform %}
 
-In this example, the first two fields widget (HTML tag) have new attributes. The last field won't
+In this example, the first two field widgets (HTML tag) have new attributes. The last field won't
 have any attribute because **wrapper_class** is not in a correct format to become a widget
-attribute. However, this argument is transmitted in context for the block rendering the field.
+attribute. However, this argument is transmitted in context for the block that renders the field.
 Jump to :ref:`keyword arguments <kwargs>` section to learn more about it.
 
 {% useblock %}
@@ -162,7 +162,7 @@ You can see this tag as an **{% include %}** tag for blocks allowing context ove
 ---------
 
 **{% use %}** is like the `{% form %}`_ tag except it's not form centric. (**{% form %}** is
-actually a child of this tag). It takes a required template name and block name and, any optional
+actually a child of this tag.) It takes a required template name and block name, and any optional
 keyword arguments (overriding context but I think you get it). Here is an example:
 
 .. code-block:: django
@@ -221,7 +221,7 @@ syntax error:
     {% set email__class="email" %}
   {% endform %}
 
-When you use **{% set %}** it add all keyword arguments to the last (and most recent) context. It
+When you use **{% set %}** it adds all keyword arguments to the last (and most recent) context. It
 works anywhere in your code but it's better to use it in a tag that override current context, like
 `{% form %}`_, `{% use %}`_ or even **{% with %}**.
 
@@ -250,7 +250,7 @@ and tag content. Here are some examples:
 You can do more. We saw the `{% field %}`_ tag can take arguments to override widget attributes but
 what if you want to override a specific field without using the `{% field %}`_ tag? (because you
 don't want to break field order or forget one). All you need is a variable named
-**{{ <field_name>__<name> }}**. Let see it with an example:
+**{{ <field_name>__<name> }}**. Let's see it with an example:
 
 .. code-block:: django
 
@@ -265,7 +265,7 @@ In this example, all fields are rendered with **{{ wrapper_class }}** as **horiz
 **email** field. We also set its widget **size** attribute.
 
 Actually, each time a `{% field %}`_ tag is called (which is the case in `{% fields %}`_ default
-block), it checks if any context variable is available for the current field and add them as current
+block), it checks if any context variable is available for the current field and adds them as current
 keyword arguments in the tag.
 
 That said, you should keep in mind that if you want this variable interpolation to work, you need

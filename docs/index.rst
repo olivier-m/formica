@@ -14,7 +14,7 @@ Contents:
 Overview
 ========
 
-Rendering forms with Django could be painful and not very rewarding. There are some nice solutions
+Rendering forms with Django can be painful and not very rewarding. There are some nice solutions
 arround like `django-floppyforms <http://django-floppyforms.readthedocs.org/en/latest/>`_ or
 `django-crispy-forms <https://github.com/maraujop/django-crispy-forms>`_ but you may want
 something a bit less complex.
@@ -35,7 +35,7 @@ Say we have a form somewhere and want to render it in a template.
     email = forms.EmailField(label='Email')
     check = forms.BooleanField(label='I really love spam', required=False)
 
-Render the form is as simple as:
+Rendering the form is as simple as:
 
 .. code-block:: django
 
@@ -49,12 +49,12 @@ Render the form is as simple as:
     <p><input type="submit" value="save" /></p>
   </form>
 
-Pretty cool isn't it? Let's dive now into more complex and :doc:`real life usages<usage>`.
+Pretty cool isn't it? Now let's dive into more complex and :doc:`real life usages<usage>`.
 
 Sources & license
 =================
 
-Formica sources are hosted on Gihub:
+Formica sources are hosted on Github:
 https://github.com/olivier-m/formica
 
 Formica is released under the
