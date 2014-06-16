@@ -15,16 +15,14 @@ A simple example
 
 Say we have a form somewhere and want to render it in a template.
 
-.. code-block:: python
+::
 
   from django import forms
   class MyForm(forms.Form):
     email = forms.EmailField(label='Email')
     check = forms.BooleanField(label='I really love spam', required=False)
 
-Render the form is as simple as:
-
-.. code-block:: django
+Render the form is as simple as::
 
   {% load formica %}
 
