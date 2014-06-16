@@ -1,0 +1,18 @@
+{% extends "formica/base_form.html" %}
+{% load formica %}
+
+{% block form %}
+{{ contents }}
+{% endblock %}
+
+{% block my_fields %}<div class="void"></div>{% endblock %}
+
+{% block field %}
+<div class="super-wrapper">
+{{ block.super }}
+</div>
+{% endblock %}
+
+{% block my_field %}
+{% useblock "field" %}
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load formica %}
+
+{% block content %}
+<div id="my_form">
+{% form "formica/base_form.html" my_form wrapper_class="wrapped" %}
+  {% field "email" %}
+  {% field form.check wrapper_class="" %}
+{% endform %}
+</div>
+
+<div id="other_form">
+{% form "formica/base_form.html" other_form with_csrf=False check__class="checkbox" %}
+  {% fields email__size=40 email__wrapper_class="wrapped" %}
+{% endform %}
+{% endblock content %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load formica %}
+
+{% block content %}
+<div id="fields">
+{% form "custom_form.html" %}
+  {% fields "" "my_fields" %}
+{% endform %}
+</div>
+
+<div id="field">
+{% form "custom_form.html" %}
+  {% field "email" %}
+  {% with foo="my_field" %}
+    {% field "check" foo %}
+  {% endwith %}
+{% endform %}
+</div>
+{% endblock content %}

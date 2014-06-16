@@ -1,0 +1,81 @@
+{% extends "formica/base_form.html" %}
+{% load i18n formica %}
+
+
+{% block table_head %}
+<tr>{% for field in fields %}{% if not field.is_hidden %}
+  <th class="{{ field.field.required|yesno:"required," }}">{% useblock "field_label" %}</th>
+{% endif %}{% endfor %}</tr>
+{% endblock table_head %}
+
+
+{% block table_row %}
+<tr>{% for field in fields %}{% if not field.is_hidden %}
+{% field field "col_field" %}
+{% endif %}{% endfor %}
+</tr>
+{% endblock table_row %}
+
+{% block col_field %}
+<td class="field {{ field.errors|yesno:"with-errors," }}">{{ field.errors }}{{ field }}</td>
+{% endblock col_field %}
+
+
+{% block hidden_fields %}
+{% for field in fields %}{% if field.is_hidden %}{{ field }}{% endif %}{% endfor %}
+{% endblock hidden_fields %}
+
+
+{% block fields %}
+<table class="form-table">
+<thead>{% useblock "table_head" fields=fields %}</thead>
+<tbody>{% useblock "table_row" fields=fields %}</tbody>
+</table>
+{% endblock fields %}
+
+
+{# Formset errors #}
+{% block formset_errors %}
+{% if formset.errors %}
+  <div class="messages error">
+  <strong>{% if form_error_title %}
+    {{ form_error_title }}
+  {% else %}
+    {% if formset.errors|length == 1 %}
+      {% trans "Please correct the error below." %}
+    {% else %}
+      {% trans "Please correct the errors below." %}
+    {% endif %}
+  {% endif %}</strong>
+  {% if form.non_form_errors %}
+    <ol>{{ form.non_form_errors|unordered_list }}</ol>
+  {% endif %}
+  </div>
+{% endif %}
+{% endblock formset_errors %}
+
+
+{% block formset_head %}
+{% useblock "table_head" fields=fields %}
+{% endblock formset_head %}
+
+
+{% block formset_fields %}
+{% useblock "table_row" fields=fields %}
+{% endblock formset_fields %}
+
+
+{% block table_formset %}
+{% useblock "formset_errors" %}
+<div style="display:none">{{ formset.management_form }}
+{% for form in formset %}{% fields fields "hidden_fields" %}{% endfor %}</div>
+<table class="form-table">
+{{ contents }}
+<thead>{% with form=formset.0 %}{% fields fields "formset_head" %}{% endwith %}</thead>
+<tbody>
+{% for form in formset %}
+  {% fields fields "formset_fields" %}
+{% endfor %}
+</tbody>
+</table>
+{% endblock table_formset %}

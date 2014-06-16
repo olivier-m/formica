@@ -1,0 +1,60 @@
+{% load i18n formica %}
+
+
+{# Main form block #}
+{% block form %}{% if with_csrf %}{% csrf_token %}{% endif %}
+{% useblock "form_errors" %}
+{{ contents }}{% endblock form %}
+
+
+{# Form errors #}
+{% block form_errors %}
+{% if form.errors %}
+  <div class="messages error">
+  <strong>{% if form_error_title %}
+    {{ form_error_title }}
+  {% else %}
+    {% if form.errors|length == 1 %}
+      {% trans "Please correct the error below." %}
+    {% else %}
+      {% trans "Please correct the errors below." %}
+    {% endif %}
+  {% endif %}</strong>
+  {% if form.non_field_errors %}
+    <ol>{{ form.non_field_errors|unordered_list }}</ol>
+  {% endif %}
+  </div>
+{% endif %}
+{% endblock form_errors %}
+
+
+{# Default field block #}
+{% block field %}
+{% if field.is_hidden %}
+  <div style="display:none;">{{ field }}</div>
+{% else %}
+  <div class="field{% if wrapper_class %} {{ wrapper_class }}{% endif %}{{ field.field.required|yesno:" required,"}} {{ field.errors|yesno:" with-errors,"}}">
+    {{ field.errors }}
+    {% if not field|is_checkbox %}{% useblock "field_label" %}{% endif %}
+    <div class="field-content">
+      {{ field }} {% if field|is_checkbox %}{% useblock "field_label" %}{% endif %}
+      {% if field.help_text %}<span class="hint">{{ field.help_text }}</span>{% endif %}
+    </div>
+  </div>
+{% endif %}
+{% endblock field %}
+
+
+{# Field list #}
+{% block fields %}
+{% for field in fields %}
+  {% field field %}
+{% endfor %}
+{% endblock fields %}
+
+
+{# Field label #}
+{% block field_label %}
+<label for="{{ field.id_for_label }}"
+{% if field.field.required %}class="required"{% endif %}>{{ field.label }}</label>
+{% endblock field_label %}

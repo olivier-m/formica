@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load formica %}
+
+{% block content %}
+<div id="form">
+{% form "formica/table_form.html" %}
+  {% fields %}
+{% endform %}
+</div>
+
+<div id="formset">
+{% use "formica/table_form.html" "table_formset" email__size=8 %}
+<caption>Formset</caption>
+{% enduse %}
+</div>
+{% endblock content %}
