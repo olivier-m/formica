@@ -230,7 +230,7 @@ def field(context, field, block_name='field', **kwargs):
 
 
 @register.simple_tag(takes_context=True)
-def fields(context, field_list=None, block_name='fields', **kwargs):
+def fields(context, field_list='', block_name='fields', **kwargs):
     if not FormTemplateNode.INSTANCE_CONTEXT_KEY in context:
         raise ValueError('"fields" tag should be in a "form" tag.')
 
@@ -241,7 +241,14 @@ def fields(context, field_list=None, block_name='fields', **kwargs):
         raise ValueError('Block "{0}" does not exist.'.format(block_name))
 
     # Make field list
-    _list = [x.strip() for x in field_list and field_list.split(',') or []]
+    if isinstance(field_list, (list, tuple)):
+        # List could be a list of strings or field instances...
+        _list = [isinstance(x, six.string_types) and x or x.name for x in field_list]
+    else:
+        # ... or a space separated list of names
+        field_list = field_list.strip()
+        _list = field_list and re.split(r'[ ,]+', field_list) or []
+
     excluded_fields = [x[1:] for x in _list if x.startswith('-')]
     fields = [x for x in _list if not x.startswith('-')]
     if len(fields) == 0:

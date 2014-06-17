@@ -53,10 +53,10 @@ list in order to let you choose which fields to render and/or their order. Here 
   {# use existing "form" variable in context #}
   {% form "formica/base_form.html" %}
     {# render only the fields "name" and "email" #}
-    {% fields "name, email" %}
+    {% fields "name email" %}
 
     {# render all other fields except "name" and "email" #}
-    {% fields "-name, -email" %}
+    {% fields "-name -email" %}
   {% endform %}
 
 As you can see, you can specify which fields to display or hide (using minus sign before the
