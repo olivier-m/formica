@@ -45,6 +45,21 @@
 {% endblock field %}
 
 
+{# Regrouped fields #}
+{% block regrouped %}
+<div class="field regrouped{% if wrapper_class %} {{ wrapper_class }}{% endif %}{{ fields|any_field_error|yesno:" with-errors," }}">
+<label{% if fields|any_field_required %} class="required"{% endif %}>{{ label }}</label>
+<div class="field-content">{% fields fields field_block="inline_field" %}</div>
+</div>
+{% endblock regrouped %}
+
+
+{# Inline field #}
+{% block inline_field %}
+<div>{{ field.errors }} {% useblock "field_label" %} {{ field }}
+{% if field.help_text %}<span class="hint">{{ field.help_text }}</span>{% endif %}</div>
+{% endblock inline_field %}
+
 {# Field list #}
 {% block fields %}
 {% for field in fields %}
