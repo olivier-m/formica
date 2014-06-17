@@ -277,6 +277,25 @@ def _set(context, **kwargs):
 # Filters
 #
 @register.filter
+def is_input(field):
+    return (isinstance(field.field.widget, forms.widgets.Input) and
+        not isinstance(field.field.widget, forms.FileInput)
+    )
+
+
+@register.filter
+def is_textarea(field):
+    return isinstance(field.field.widget, forms.Textarea)
+
+
+@register.filter
+def is_select(field):
+    return (isinstance(field.field.widget, forms.Select) and
+        not isinstance(field.field.widget, forms.widgets.RendererMixin)
+    )
+
+
+@register.filter
 def is_checkbox(field):
     return isinstance(field.field.widget, forms.CheckboxInput)
 
@@ -299,3 +318,15 @@ def is_checkboxselectmultiple(field):
 @register.filter
 def is_file(field):
     return isinstance(field.field.widget, forms.FileInput)
+
+
+@register.filter
+def any_field_error(fields):
+    fields = fields if isinstance(fields, (list, tuple)) else [fields]
+    return any(len(x.errors) > 0 for x in fields)
+
+
+@register.filter
+def any_field_required(fields):
+    fields = fields if isinstance(fields, (list, tuple)) else [fields]
+    return any(x.field.required for x in fields)
