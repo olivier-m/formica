@@ -287,8 +287,7 @@ def _set(context, **kwargs):
 @register.filter
 def is_input(field):
     return (isinstance(field.field.widget, forms.widgets.Input) and
-        not isinstance(field.field.widget, forms.FileInput)
-    )
+            not isinstance(field.field.widget, forms.FileInput))
 
 
 @register.filter
@@ -299,8 +298,7 @@ def is_textarea(field):
 @register.filter
 def is_select(field):
     return (isinstance(field.field.widget, forms.Select) and
-        not isinstance(field.field.widget, forms.widgets.RendererMixin)
-    )
+            not isinstance(field.field.widget, forms.widgets.RendererMixin))
 
 
 @register.filter
