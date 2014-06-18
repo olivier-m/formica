@@ -1,0 +1,117 @@
+{% extends "formica/base_form.html" %}
+{% load i18n formica %}
+
+{% block field_label %}
+<label for="{{ field.id_for_label }}" {% if hide_label %}class="sr-only"{% endif %}>{{ field.label }}</label>
+{% endblock field_label %}
+
+{# Form errors #}
+{% block form_errors %}
+{% if form.errors %}
+  <div class="alert alert-danger">
+  <strong>{% if form_error_title %}
+    {{ form_error_title }}
+  {% else %}
+    {% if form.errors|length == 1 %}
+      {% trans "Please correct the error below." %}
+    {% else %}
+      {% trans "Please correct the errors below." %}
+    {% endif %}
+  {% endif %}</strong>
+  {% if form.non_field_errors %}
+    <ol>{{ form.non_field_errors|unordered_list }}</ol>
+  {% endif %}
+  </div>
+{% endif %}
+{% endblock form_errors %}
+
+
+{# Field errors #}
+{% block field_errors %}
+{% if field.errors %}
+  {% for error in field.errors %}
+    <div class="text-danger {{ error_class }}"><strong>{{ error }}</strong></div>
+  {% endfor %}
+{% endif %}
+{% endblock field_errors %}
+
+
+{# Base field #}
+{% block field %}
+{% if field.is_hidden %}{{ field }}
+{% else %}
+  {% set class=attrs.class %}
+  {% if field|is_input or field|is_textarea or field|is_select %}
+    {% set class="form-control" %}
+  {% endif %}
+  <div class="form-group {{ group_class }}">
+    {% useblock "field_errors" %}
+    {% if not field|is_checkbox %}{% useblock "field_label" %}{% endif %}
+    {% field field "_widget" class=class %}
+    {% if field.help_text %}<span class="help-block">{{ field.help_text }}</span>{% endif %}
+  </div>
+{% endif %}
+{% endblock field %}
+
+
+{# Floatting field #}
+{% block field_horizontal %}
+{% if field.is_hidden %}{{ field }}
+{% else %}
+  {% set class=attrs.class %}
+  {% set control_class=control_class %}
+  {% if field|is_input or field|is_textarea or field|is_select %}
+  {% set class=class|add:" form-control" %}
+  {% endif %}
+  {% if field|is_file %}
+  {% set control_class=control_class|add:" form-control-static" %}
+  {% endif %}
+  <div class="form-horizontal">
+  <div class="form-group {{ group_class }}">
+    {% useblock "field_errors" error_class=error_class|default:"col-md-10 col-md-offset-2" %}
+    <div class="{{ label_cols|default:"col-md-2" }} {{ label_class }} control-label">{% if not field|is_checkbox %}{% useblock "field_label" %}{% endif %}</div>
+    <div class="{{ control_cols|default:"col-md-10" }} {{ control_class }}">{% field field "_widget" class=class %}
+    {% if field.help_text %}<span class="help-block">{{ field.help_text }}</span>{% endif %}
+    </div>
+  </div>
+  </div>
+{% endif %}
+{% endblock field_horizontal %}
+
+
+{# Regrouped fields #}
+{% block regrouped %}
+{% if label %}<label>{{ label }}</label>{% endif %}
+<div class="form-group form-inline">{% useblock "fields" %}</div>
+{% endblock regrouped %}
+
+
+{# Base widgets #}
+{% block _widget %}
+{% if field|is_checkbox %}{% useblock "_widget_checkbox" %}
+{% elif field|is_radioselect %}{% useblock "_widget_radioselect" %}
+{% elif field|is_checkboxselectmultiple %}{% useblock "_widget_checkboxselectmultiple" %}
+{% else %}{{ field }}{% endif %}
+{% endblock _widget %}
+
+
+{% block _widget_radioselect %}
+{% for choice in field.field.choices %}{% if not is_inline %}<div class="radio">{% endif %}
+  <label{% if is_inline %} class="radio-inline"{% endif %}><input type="radio" value="{{ choice.0 }}" name="{{ field.name }}" id="{{ field.auto_id }}_{{ forloop.counter0 }}" />
+  {{ choice.1 }}</label>
+{% if not is_inline %}</div>{% endif %}{% endfor %}
+{% endblock _widget_radioselect %}
+
+
+{% block _widget_checkboxselectmultiple %}
+{% for choice in field.field.choices %}{% if not is_inline %}<div class="checkbox">{% endif %}
+  <label{% if is_inline %} class="checkbox-inline"{% endif %}><input type="checkbox" value="{{ choice.0 }}" name="{{ field.name }}" id="{{ field.auto_id }}_{{ forloop.counter0 }}" />
+  {{ choice.1 }}</label>
+{% if not is_inline %}</div>{% endif %}{% endfor %}
+{% endblock _widget_checkboxselectmultiple %}
+
+
+{% block _widget_checkbox %}
+<div class="checkbox"><label><input type="checkbox" id="{{ field.id_for_label }}" name="{{ field.name }}" />
+{{ field.label }}</label></div>
+{% endblock _widget_checkbox %}
