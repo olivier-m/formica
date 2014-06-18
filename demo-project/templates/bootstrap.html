@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Formica example using Bootstrap</title>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+</head>
+
+<body>
+{% load formica %}
+<div class="container">
+  <h1>Formica example using <a href="http://getbootstrap.com/">Bootstrap</a></h1>
+
+  <p>This page shows Formica usage using Bootstrap CSS framework. It presents some
+  limitations but you could be able to do the most usual tasks following this examples.</p>
+
+  <form method="post">
+  {% form "formica/bootstrap/base_form.html" %}
+    {# set some field settings here #}
+    {% set firstname__placeholder="John" firstname__size="40" %}
+    {% set name__placeholder="Doe" %}
+    {% set date__placeholder="YYYY-MM-DD" time__placeholder="HH:MM:SS" %}
+    {% set datetime__placeholder="YYYY-MM-DD HH:MM:SS" %}
+
+    {# to remove 100% width on controls #}
+    {% set choices__group_class="form-inline" mchoices__group_class="form-inline" %}
+
+    {# put choices on a single line #}
+    {% set mchoices2__is_inline=True %}
+
+    {% set repeat__class="form-control" repeat__group_class="form-inline" %}
+
+    {# If you need to add a class to .form-group block, use group_class #}
+    {% set splitdatetime__class="form-control" splitdatetime__group_class="form-inline" %}
+
+    <h2>Basic layout</h2>
+    {% fields form.field_groups.0 %}
+
+    <h2>Regrouped fields</h2>
+    {% fields form.field_groups.1 "regrouped" label="Group with label" %}
+    {% fields form.field_groups.2 "regrouped" %}
+
+    <h2>Horizontal fields</h2>
+    {% fields form.field_groups.3 field_block="field_horizontal" %}
+    {% fields form.field_groups.4 field_block="field_horizontal" group_class="form-inline" %}
+
+    <h2>Horizontal multiple widget field</h2>
+    {% fields form.field_groups.5 field_block="field_horizontal"  %}
+  {% endform %}
+
+  <p><button type="submit" class="btn btn-primary">Submit</button></p>
+  </form>
+</div>
+</body>
+</html>

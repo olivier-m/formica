@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+{% load staticfiles %}
+<head>
+  <meta charset="UTF-8">
+  <title>Formica templates</title>
+  <link rel="stylesheet" href="{% static "base.css" %}" />
+</head>
+
+<body>
+<div id="main">
+  <h1>Formica templates</h1>
+  <ul>
+    <li><a href="{% url "default" %}">Default</a></li>
+    <li><a href="{% url "bootstrap" %}">Bootrstrap 3</a></li>
+  </ul>
+</div>
+</body>
+</html>
