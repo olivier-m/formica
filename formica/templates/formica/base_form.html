@@ -30,8 +30,7 @@
 
 {# Default field block #}
 {% block field %}
-{% if field.is_hidden %}
-  <div style="display:none;">{{ field }}</div>
+{% if field.is_hidden %}{{ field }}
 {% else %}
   <div class="field{% if wrapper_class %} {{ wrapper_class }}{% endif %}{{ field.field.required|yesno:" required,"}} {{ field.errors|yesno:" with-errors,"}}">
     {{ field.errors }}
@@ -48,7 +47,7 @@
 {# Regrouped fields #}
 {% block regrouped %}
 <div class="field regrouped{% if wrapper_class %} {{ wrapper_class }}{% endif %}{{ fields|any_field_error|yesno:" with-errors," }}">
-<label{% if fields|any_field_required %} class="required"{% endif %}>{{ label }}</label>
+{% if label %}<label{% if fields|any_field_required %} class="required"{% endif %}>{{ label }}</label>{% endif %}
 <div class="field-content">{% fields fields field_block="inline_field" %}</div>
 </div>
 {% endblock regrouped %}

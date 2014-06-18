@@ -219,6 +219,7 @@ def field(context, field, block_name='field', **kwargs):
     # Set new context and widget attributes based on kwargs and current context
     ctx, attrs = get_field_context(field, context)
     ctx.update(kwargs)
+    ctx['attrs'] = attrs
 
     attrs.update(get_widget_attrs(kwargs))
     field.field.widget.attrs.update(attrs)

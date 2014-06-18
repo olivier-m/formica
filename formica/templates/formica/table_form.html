@@ -27,7 +27,7 @@
 
 
 {% block fields %}
-<table class="form-table">
+<table class="form-table {{ table_class }}">
 <thead>{% useblock "table_head" fields=fields %}</thead>
 <tbody>{% useblock "table_row" fields=fields %}</tbody>
 </table>
@@ -69,7 +69,7 @@
 {% useblock "formset_errors" %}
 <div style="display:none">{{ formset.management_form }}
 {% for form in formset %}{% fields fields "hidden_fields" %}{% endfor %}</div>
-<table class="form-table">
+<table class="form-table {{ table_class }}">
 {{ contents }}
 <thead>{% with form=formset.0 %}{% fields fields "formset_head" %}{% endwith %}</thead>
 <tbody>
