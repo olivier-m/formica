@@ -2,6 +2,16 @@
 Templates and recipes
 =====================
 
+Default stylesheet
+==================
+
+Formica provides a default stylesheet suitable with `formica/base_form.html`_ and
+`formica/table_form.html`_.
+
+You can download :download:`default-form.css <../demo-project/static/default-form.css>`
+and incorporate it in your application or project.
+
+
 Provided templates
 ==================
 
@@ -162,6 +172,9 @@ Customize templates
 
 You need only 3 templates blocks to render templates with Formica. Here are their descriptions and
 context they receive.
+
+If you plan to make your own Formica template, a good start would be to run (and hack) the
+:ref:`demonstration project <demo>`.
 
 form
 ****

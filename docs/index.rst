@@ -23,6 +23,11 @@ Formica design is heavily based on `Formulation <https://github.com/funkybob/for
 lightweight, yet powerful, solution based on template blocks. All credits should go to
 `Curtis Maloney <https://github.com/funkybob>`_ for this impressive and simple idea.
 
+.. note::
+
+  If you're in a hurry and just want to see how it looks and how it works, there's a
+  :ref:`demonstration project <demo>` for you.
+
 A simple example
 ================
 
