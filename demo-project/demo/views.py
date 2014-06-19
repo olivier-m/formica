@@ -134,7 +134,6 @@ class TableForm(forms.Form):
         label='Pick one',
         choices=((1, 'Dogs'), (2, 'Cats'), (3, 'Birds')),
         widget=forms.Select,
-        help_text='Some help'
     )
 
 
