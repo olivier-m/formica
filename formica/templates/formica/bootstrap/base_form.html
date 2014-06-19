@@ -79,6 +79,12 @@
 {% endblock field_horizontal %}
 
 
+{# Shortcut to use with fields tag #}
+{% block horizontal %}
+{% fields fields field_block="field_horizontal" %}
+{% endblock horizontal %}
+
+
 {# Regrouped fields #}
 {% block regrouped %}
 {% if label %}<label>{{ label }}</label>{% endif %}
