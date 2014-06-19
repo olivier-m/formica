@@ -56,6 +56,23 @@ Rendering the form is as simple as:
 
 Pretty cool isn't it? Now let's dive into more complex and :doc:`real life usages<usage>`.
 
+Changes
+=======
+
+version 1.1 - 2014-06-19
+************************
+
+- Bootstrap template
+- New filters (is_input, is_textarea, is_select)
+- Added an context **attrs** variable in **{% field %}** tag.
+- Demonstration project
+- Stylesheet for default template
+
+version 1.0 - 2014-06-16
+************************
+
+- Initial release.
+
 Sources & license
 =================
 
