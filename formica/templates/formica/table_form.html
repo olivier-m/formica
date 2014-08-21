@@ -17,7 +17,7 @@
 {% endblock table_row %}
 
 {% block col_field %}
-<td class="field {{ field.errors|yesno:"with-errors," }}">{{ field.errors }}{{ field }}</td>
+<td class="form-field {{ field.errors|yesno:"with-errors," }}">{{ field.errors }}{{ field }}</td>
 {% endblock col_field %}
 
 
@@ -37,7 +37,7 @@
 {# Formset errors #}
 {% block formset_errors %}
 {% if formset.errors %}
-  <div class="messages error">
+  <div class="form-errors">
   <strong>{% if form_error_title %}
     {{ form_error_title }}
   {% else %}

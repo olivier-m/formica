@@ -202,7 +202,7 @@ register.tag('form', use_template(FormTemplateNode))
 
 @register.simple_tag(takes_context=True)
 def field(context, field, block_name='field', **kwargs):
-    if not FormTemplateNode.INSTANCE_CONTEXT_KEY in context:
+    if FormTemplateNode.INSTANCE_CONTEXT_KEY not in context:
         raise ValueError('"field" tag should be in a "form" tag with a valid form.')
 
     form = context[FormTemplateNode.INSTANCE_CONTEXT_KEY]
@@ -212,7 +212,7 @@ def field(context, field, block_name='field', **kwargs):
         raise ValueError('Block "{0}" does not exist.'.format(block_name))
 
     if isinstance(field, six.string_types):
-        if not field in form.fields:
+        if field not in form.fields:
             raise ValueError('Field "{0}" does not exist'.format(field))
         field = form[field]
 
@@ -232,7 +232,7 @@ def field(context, field, block_name='field', **kwargs):
 
 @register.simple_tag(takes_context=True)
 def fields(context, field_list='', block_name='fields', **kwargs):
-    if not FormTemplateNode.INSTANCE_CONTEXT_KEY in context:
+    if FormTemplateNode.INSTANCE_CONTEXT_KEY not in context:
         raise ValueError('"fields" tag should be in a "form" tag.')
 
     form = context[FormTemplateNode.INSTANCE_CONTEXT_KEY]

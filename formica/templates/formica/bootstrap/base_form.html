@@ -19,7 +19,7 @@
     {% endif %}
   {% endif %}</strong>
   {% if form.non_field_errors %}
-    <ol>{{ form.non_field_errors|unordered_list }}</ol>
+    <ul class="list-unstyled">{{ form.non_field_errors|unordered_list }}</ul>
   {% endif %}
   </div>
 {% endif %}
@@ -44,7 +44,7 @@
   {% if field|is_input or field|is_textarea or field|is_select %}
     {% set class="form-control" %}
   {% endif %}
-  <div class="form-group {{ wrapper_class }}">
+  <div class="form-group {{ field.errors|yesno:"has-error,"}} {{ wrapper_class }}">
     {% useblock "field_errors" %}
     {% if not field|is_checkbox %}{% useblock "field_label" %}{% endif %}
     {% field field "_widget" class=class %}
@@ -67,7 +67,7 @@
   {% set control_class=control_class|add:" form-control-static" %}
   {% endif %}
   <div class="form-horizontal">
-  <div class="form-group {{ wrapper_class }}">
+  <div class="form-group {{ field.errors|yesno:"has-error,"}} {{ wrapper_class }}">
     {% useblock "field_errors" error_class=error_class|default:"col-md-10 col-md-offset-2" %}
     <div class="{{ label_cols|default:"col-md-2" }} {{ label_class }} control-label">{% if not field|is_checkbox %}{% useblock "field_label" %}{% endif %}</div>
     <div class="{{ control_cols|default:"col-md-10" }} {{ control_class }}">{% field field "_widget" class=class %}

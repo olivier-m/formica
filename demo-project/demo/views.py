@@ -116,11 +116,8 @@ class CompleteForm(forms.Form):
         ('firstname', 'name', 'yesno'),
         ('email', 'url'),
         ('number', 'floated'),
-        (
-            'path', 'image', 'choices', 'sure', 'text',
-            'mchoices', 'choices2', 'mchoices2', 'maybe', 'ip', 'decimal',
-            'repeat'
-        ),
+        ('path', 'image', 'choices', 'sure', 'text'),
+        ('mchoices', 'choices2', 'mchoices2', 'maybe', 'ip', 'decimal','repeat'),
         ('date', 'time'),
         ('datetime', 'splitdatetime',)
     )

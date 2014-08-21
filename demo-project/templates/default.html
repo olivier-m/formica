@@ -19,7 +19,7 @@ your project or application.</p>
 <p>Have a look at this template's source to see how such a form can be created. No witchcraft,
 only some template tags and variables.</p>
 
-<form method="post" class="uniForm">
+<form method="post">
 {% form "formica/base_form.html" %}
   {# set some field settings here #}
   {% set firstname__placeholder="John" firstname__size="40" %}
@@ -43,18 +43,21 @@ only some template tags and variables.</p>
   <h2>Horizontal fields</h2>
   {% fields form.field_groups.3 wrapper_class="horizontal" %}
 
+  <h2>Horizontal and solid fields</h2>
+  {% fields form.field_groups.3 wrapper_class="horizontal solid" %}
+
   <h2>Horizontal regrouped</h2>
-  {% fields form.field_groups.4 "regrouped" wrapper_class="horizontal" label="Horizontal regrouped" %}
+  {% fields form.field_groups.5 "regrouped" wrapper_class="horizontal" label="Horizontal regrouped" %}
 
   <h2>Horizontal multiple widget field</h2>
-  {% fields form.field_groups.5 wrapper_class="horizontal" %}
+  {% fields form.field_groups.6 wrapper_class="horizontal" %}
 {% endform %}
 
 <h2>Table formset</h2>
 {% use "formica/table_form.html" "table_formset" name__size=8 date__size=8 %}
 {% enduse %}
 
-<p><button type="submit" class="primary">Submit</button></p>
+<p><button type="submit">Submit</button></p>
 </form>
 
 </div>
