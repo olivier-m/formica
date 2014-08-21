@@ -59,6 +59,12 @@ Pretty cool isn't it? Now let's dive into more complex and :doc:`real life usage
 Changes
 =======
 
+version 1.2 - 2014-08-21
+========================
+
+- Changes in default template blocks
+- Minor fixes for Bootstrap
+
 version 1.1 - 2014-06-19
 ************************
 
