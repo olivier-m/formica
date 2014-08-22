@@ -30,9 +30,9 @@ class FormicaTestCase(TestCase):
         d = pq(r.content)
 
         self.assertEqual(1, len(d('input#id_email')))
-        self.assertEqual(1, len(d('div.field>label[for=id_email]')))
+        self.assertEqual(1, len(d('div.form-field>label[for=id_email]')))
         self.assertEqual(1, len(d('input#id_check')))
-        self.assertEqual(1, len(d('div.field>div.field-content>label[for=id_check]')))
+        self.assertEqual(1, len(d('div.form-field>div.field-content>label[for=id_check]')))
 
     def test_raise(self):
         self.assertRaises(TemplateSyntaxError, self.client.get, '/raises')
@@ -46,13 +46,13 @@ class FormicaTestCase(TestCase):
         self.assertTag(d, 'input#id_other-email')
         self.assertTag(d, 'input#id_other-check')
 
-        self.assertTag(d, '#my_form div.field', 2)
-        self.assertTag(d, '#my_form div.field.wrapped')
+        self.assertTag(d, '#my_form div.form-field', 2)
+        self.assertTag(d, '#my_form div.form-field.wrapped')
         self.assertTag(d, '#my_form input[name=csrfmiddlewaretoken]')
 
-        self.assertTag(d, '#other_form div.field', 2)
+        self.assertTag(d, '#other_form div.form-field', 2)
         self.assertTag(d, '#other_form input#id_other-email[size="40"]')
-        self.assertTag(d, '#other_form div.field.wrapped input#id_other-email')
+        self.assertTag(d, '#other_form div.form-field.wrapped input#id_other-email')
         self.assertTag(d, '#other_form input#id_other-check[class=checkbox]')
         self.assertTag(d, '#other_form input#id_other-check[title="check title"]')
         self.assertTag(d, '#other_form input[name=csrfmiddlewaretoken]', 0)
@@ -65,16 +65,16 @@ class FormicaTestCase(TestCase):
 
         self.assertTag(d, '#form thead>tr>th>label[for=id_email]')
         self.assertTag(d, '#form thead>tr>th>label[for=id_check]')
-        self.assertTag(d, '#form tbody>tr>td.field>input#id_email')
-        self.assertTag(d, '#form tbody>tr>td.field>input#id_check')
+        self.assertTag(d, '#form tbody>tr>td.form-field>input#id_email')
+        self.assertTag(d, '#form tbody>tr>td.form-field>input#id_check')
 
         self.assertTag(d, '#formset thead')
         self.assertTag(d, '#formset tbody>tr', 2)
         self.assertTag(d, '#formset>div>input#id_form-TOTAL_FORMS[value="2"]')
-        self.assertTag(d, '#formset tbody>tr>td.field>input#id_form-0-email')
-        self.assertTag(d, '#formset tbody>tr>td.field>input#id_form-1-check')
-        self.assertTag(d, '#formset tbody>tr>td.field>input#id_form-1-ORDER')
-        self.assertTag(d, '#formset tbody>tr>td.field>input#id_form-1-DELETE')
+        self.assertTag(d, '#formset tbody>tr>td.form-field>input#id_form-0-email')
+        self.assertTag(d, '#formset tbody>tr>td.form-field>input#id_form-1-check')
+        self.assertTag(d, '#formset tbody>tr>td.form-field>input#id_form-1-ORDER')
+        self.assertTag(d, '#formset tbody>tr>td.form-field>input#id_form-1-DELETE')
 
     def test_custom(self):
         r = self.client.get('/custom')
@@ -83,12 +83,11 @@ class FormicaTestCase(TestCase):
         self.assertEqual(1, len(d('#fields').children()))
         self.assertTag(d, '#fields>div.void')
 
-        self.assertTag(d, '#field div.super-wrapper>div.field input#id_email')
-        self.assertTag(d, '#field div.super-wrapper>div.field input#id_check')
+        self.assertTag(d, '#field div.super-wrapper>div.form-field input#id_email')
+        self.assertTag(d, '#field div.super-wrapper>div.form-field input#id_check')
 
     def test_errors(self):
         r = self.client.get('/errors')
         d = pq(r.content)
-
-        self.assertTag(d, 'body>div.messages.error>strong')
-        self.assertTag(d, 'div.field>ul.errorlist>li', 2)
+        self.assertTag(d, 'body>div.form-errors>strong')
+        self.assertTag(d, 'div.form-field>ul.errorlist>li', 2)

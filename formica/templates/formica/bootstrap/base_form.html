@@ -42,7 +42,7 @@
 {% else %}
   {% set class=attrs.class %}
   {% if field|is_input or field|is_textarea or field|is_select %}
-    {% set class="form-control" %}
+    {% set class=class|add:" form-control" %}
   {% endif %}
   <div class="form-group {{ field.errors|yesno:"has-error,"}} {{ wrapper_class }}">
     {% useblock "field_errors" %}
@@ -61,10 +61,10 @@
   {% set class=attrs.class %}
   {% set control_class=control_class %}
   {% if field|is_input or field|is_textarea or field|is_select %}
-  {% set class=class|add:" form-control" %}
+    {% set class=class|add:" form-control" %}
   {% endif %}
   {% if field|is_file %}
-  {% set control_class=control_class|add:" form-control-static" %}
+    {% set control_class=control_class|add:" form-control-static" %}
   {% endif %}
   <div class="form-horizontal">
   <div class="form-group {{ field.errors|yesno:"has-error,"}} {{ wrapper_class }}">

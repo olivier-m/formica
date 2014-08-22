@@ -48,7 +48,11 @@ def runtests():
     setup_test_environment()
 
     try:
+        import django
         from django.test.runner import DiscoverRunner as TestRunner
+
+        if hasattr(django, 'setup'):  # Django >= 1.7
+            django.setup()
         test_args = ['formica.tests']
     except ImportError:  # Django < 1.6
         from django.test.simple import DjangoTestSuiteRunner as TestRunner
