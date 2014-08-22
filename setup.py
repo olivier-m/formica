@@ -36,7 +36,7 @@ setup(
     zip_safe=False,
     test_suite='tests.runtests',
     tests_require=[
-        'pyquery',
+        'beautifulsoup4',
     ],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
