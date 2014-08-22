@@ -59,6 +59,11 @@ Pretty cool isn't it? Now let's dive into more complex and :doc:`real life usage
 Changes
 =======
 
+version 1.2.1 - 2014-08-22
+==========================
+
+- Django 1.7 compatibility
+
 version 1.2 - 2014-08-21
 ========================
 
