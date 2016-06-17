@@ -4,4 +4,4 @@
 # See the LICENSE for more information.
 from __future__ import (print_function, division, absolute_import, unicode_literals)  # noqa
 
-__version__ = '1.2.1'
+__version__ = '1.3.0'
