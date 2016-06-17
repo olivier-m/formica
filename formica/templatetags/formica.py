@@ -2,15 +2,18 @@
 #
 # This file is part of Formica released under the FreeBSD license.
 # See the LICENSE for more information.
-from __future__ import (print_function, division, absolute_import, unicode_literals)
+from __future__ import (print_function, division, absolute_import, unicode_literals)  # noqa
 
 from contextlib import contextmanager
+from copy import copy
 import re
 
 from django import forms
-from django.template.base import parse_bits
+from django.template.context import RenderContext
+from django.template.library import parse_bits
 from django.template.loader import get_template
-from django.template.loader_tags import BlockNode, BlockContext, ExtendsNode, BLOCK_CONTEXT_KEY
+from django.template.loader_tags import (
+    BlockNode, BlockContext, ExtendsNode, BLOCK_CONTEXT_KEY)
 from django import template
 from django.utils import six
 
@@ -40,7 +43,8 @@ def get_field_context(field, context):
     attrs = {}
     ctx = {}
     for data in context.dicts:
-        _ctx.update(dict((k[len(s):], v) for k, v in data.items() if k.startswith(s)))
+        _ctx.update(dict((k[len(s):], v) for k, v in data.items()
+                         if k.startswith(s)))
 
     # Dispatch attribute values from context values
     for k, v in _ctx.items():
@@ -74,10 +78,12 @@ def use_template(klass):
         tag_name = bits.pop(0)
         if len(bits) == 0:
             raise template.TemplateSyntaxError(
-                '"{0}" tag takes at least 1 argument: the template name'.format(tag_name)
+                '"{0}" tag takes at least 1 argument: '
+                'the template name'.format(tag_name)
             )
 
-        args, kwargs = parse_bits(parser, bits, ['template_name'], '', '', None, False, 'form')
+        args, kwargs = parse_bits(parser, bits, ['template_name'],
+                                  '', '', None, False, 'form')
 
         nodelist = parser.parse(('end{0}'.format(tag_name),))
         template_name = args.pop(0)
@@ -109,7 +115,11 @@ class UseTemplateNode(template.Node):
         if isinstance(template, six.string_types):
             template = get_template(template)
 
+        if hasattr(template, 'template'):
+            template = template.template
+
         # Add this templates blocks as the first
+
         local_blocks = dict(
             (block.name, block)
             for block in template.nodelist.get_nodes_by_type(BlockNode)
@@ -138,11 +148,16 @@ class UseTemplateNode(template.Node):
             )
         block_name = self.args[0].resolve(context)
         if block_name in (None, ''):
-            raise ValueError('No block name in tag "{0}"'.format(self.tag_name))
+            raise ValueError('No block name in tag "{0}"'
+                             .format(self.tag_name))
 
         return block_name
 
-    def render(self, context):
+    def render(self, context_):
+        # Start with a blank render context
+        context = copy(context_)
+        context.render_context = RenderContext()
+
         template_name = self.template_name.resolve(context)
         if not template_name:
             raise template.TemplateSyntaxError(
@@ -170,7 +185,8 @@ class FormTemplateNode(UseTemplateNode):
     INSTANCE_CONTEXT_KEY = 'form'
 
     def __init__(self, nodelist, tag_name, template_name, form=None, **kwargs):
-        super(FormTemplateNode, self).__init__(nodelist, tag_name, template_name, **kwargs)
+        super(FormTemplateNode, self).__init__(nodelist, tag_name,
+                                               template_name, **kwargs)
         self.form = form
 
     def get_block_name(self, context):
@@ -185,7 +201,8 @@ class FormTemplateNode(UseTemplateNode):
             form = context.get('form')
 
         if form is None:
-            raise template.TemplateSyntaxError('No form to render in form tag.')
+            raise template.TemplateSyntaxError(
+                'No form to render in form tag.')
 
         ctx[self.INSTANCE_CONTEXT_KEY] = form
         ctx['with_csrf'] = ctx.get('with_csrf', True)
@@ -203,7 +220,8 @@ register.tag('form', use_template(FormTemplateNode))
 @register.simple_tag(takes_context=True)
 def field(context, field, block_name='field', **kwargs):
     if FormTemplateNode.INSTANCE_CONTEXT_KEY not in context:
-        raise ValueError('"field" tag should be in a "form" tag with a valid form.')
+        raise ValueError(
+            '"field" tag should be in a "form" tag with a valid form.')
 
     form = context[FormTemplateNode.INSTANCE_CONTEXT_KEY]
     blocks = context.render_context[BLOCK_CONTEXT_KEY]
@@ -244,7 +262,9 @@ def fields(context, field_list='', block_name='fields', **kwargs):
     # Make field list
     if isinstance(field_list, (list, tuple)):
         # List could be a list of strings or field instances...
-        _list = [isinstance(x, six.string_types) and x or x.name for x in field_list]
+        _list = [isinstance(x, six.string_types)
+                 and x
+                 or x.name for x in field_list]
     else:
         # ... or a space separated list of names
         field_list = field_list.strip()

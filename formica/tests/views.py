@@ -2,7 +2,7 @@
 #
 # This file is part of Formica released under the FreeBSD license.
 # See the LICENSE for more information.
-from __future__ import (print_function, division, absolute_import, unicode_literals)
+from __future__ import (print_function, division, absolute_import, unicode_literals)  # noqa
 
 from django import forms
 from django.forms.formsets import formset_factory
@@ -13,7 +13,8 @@ class SimpleForm(forms.Form):
     email = forms.EmailField()
     check = forms.BooleanField()
 
-SimpleFormset = formset_factory(SimpleForm, extra=2, can_delete=True, can_order=True)
+SimpleFormset = formset_factory(SimpleForm, extra=2,
+                                can_delete=True, can_order=True)
 
 
 def simple_form(request):

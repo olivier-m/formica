@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import (print_function, division, absolute_import, unicode_literals)
+from __future__ import (print_function, division, absolute_import, unicode_literals)  # noqa
 
 from django import forms
 from django.forms.formsets import formset_factory
@@ -88,15 +88,20 @@ class CompleteForm(forms.Form):
         label='You sure?', required=True,
         help_text='Should you have the choice'
     )
-    text = forms.CharField(required=False, widget=forms.Textarea(attrs={'cols': 60, 'rows': 10}))
-    mchoices = forms.MultipleChoiceField(label='Multiple choices', choices=CHOICES)
-    choices2 = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect)
+    text = forms.CharField(required=False,
+                           widget=forms.Textarea(attrs={'cols': 60,
+                                                        'rows': 10}))
+    mchoices = forms.MultipleChoiceField(label='Multiple choices',
+                                         choices=CHOICES, initial=[2])
+    choices2 = forms.ChoiceField(choices=CHOICES,
+                                 widget=forms.RadioSelect, initial=1)
     mchoices2 = forms.MultipleChoiceField(
         label='Multiple choices', choices=CHOICES,
-        widget=forms.CheckboxSelectMultiple
+        widget=forms.CheckboxSelectMultiple,
+        initial=[2, 3]
     )
     maybe = forms.NullBooleanField(required=False)
-    ip = forms.IPAddressField(label='IP Address')
+    ip = forms.GenericIPAddressField(label='IP Address')
     decimal = forms.DecimalField()
     repeat = RepeatField(
         label='Repeat', initial=(False, None, None, None),
@@ -110,14 +115,15 @@ class CompleteForm(forms.Form):
     splitdatetime = forms.SplitDateTimeField(label='Date and Time')
 
     # Convenient way to have some field groups.
-    # You don't need to do it and can use field names in your templates but in this
-    # case it was easier to use such a trick :)
+    # You don't need to do it and can use field names in your templates
+    # but in this case it was easier to use such a trick :)
     field_groups = (
         ('firstname', 'name', 'yesno'),
         ('email', 'url'),
         ('number', 'floated'),
         ('path', 'image', 'choices', 'sure', 'text'),
-        ('mchoices', 'choices2', 'mchoices2', 'maybe', 'ip', 'decimal','repeat'),
+        ('mchoices', 'choices2', 'mchoices2', 'maybe',
+         'ip', 'decimal', 'repeat'),
         ('date', 'time'),
         ('datetime', 'splitdatetime',)
     )
@@ -134,7 +140,8 @@ class TableForm(forms.Form):
     )
 
 
-SimpleFormset = formset_factory(TableForm, extra=4, can_delete=True, can_order=False)
+SimpleFormset = formset_factory(TableForm, extra=4,
+                                can_delete=True, can_order=False)
 
 
 def home(request):

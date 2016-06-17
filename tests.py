@@ -39,6 +39,14 @@ def setup_test_environment():
             'django.middleware.clickjacking.XFrameOptionsMiddleware',
         ),
         'ROOT_URLCONF': '',
+        'TEMPLATE_CONTEXT_PROCESSORS': [
+            "django.template.context_processors.debug",
+            "django.template.context_processors.i18n",
+            "django.template.context_processors.media",
+            "django.template.context_processors.static",
+            "django.template.context_processors.tz",
+            "django.contrib.messages.context_processors.messages"
+        ]
     }
 
     settings.configure(**settings_dict)

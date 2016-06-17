@@ -2,7 +2,8 @@
 #
 # This file is part of Formica released under the FreeBSD license.
 # See the LICENSE for more information.
-from __future__ import (print_function, division, absolute_import, unicode_literals)
+from __future__ import (print_function, division, absolute_import, unicode_literals)  # noqa
+
 import os.path
 
 from django.template import TemplateSyntaxError
@@ -39,7 +40,7 @@ class FormicaTestCase(TestCase):
         self.assertTag(d, 'input#id_email')
         self.assertTag(d, 'div.form-field > label[for="id_email"]')
         self.assertTag(d, 'input#id_check')
-        self.assertTag(d, 'div.form-field > div.field-content > label[for="id_check"]')
+        self.assertTag(d, 'div.form-field > div.field-content > label[for="id_check"]')  # noqa
 
     def test_raise(self):
         self.assertRaises(TemplateSyntaxError, self.client.get, '/raises')
@@ -59,9 +60,9 @@ class FormicaTestCase(TestCase):
 
         self.assertTag(d, '#other_form div.form-field', 2)
         self.assertAttr(d, '#other_form input#id_other-email', 'size', '40')
-        self.assertTag(d, '#other_form div.form-field.wrapped input#id_other-email')
-        self.assertAttr(d, '#other_form input#id_other-check', 'class', ['checkbox'])
-        self.assertAttr(d, '#other_form input#id_other-check', 'title', 'check title')
+        self.assertTag(d, '#other_form div.form-field.wrapped input#id_other-email')  # noqa
+        self.assertAttr(d, '#other_form input#id_other-check', 'class', ['checkbox'])  # noqa
+        self.assertAttr(d, '#other_form input#id_other-check', 'title', 'check title')  # noqa
         self.assertTag(d, '#other_form input[name="csrfmiddlewaretoken"]', 0)
 
         self.assertEqual('', d.select('#void')[0].text)
@@ -77,11 +78,11 @@ class FormicaTestCase(TestCase):
 
         self.assertTag(d, '#formset thead')
         self.assertTag(d, '#formset tbody > tr', 2)
-        self.assertAttr(d, '#formset > div > input#id_form-TOTAL_FORMS', 'value', '2')
-        self.assertTag(d, '#formset tbody > tr > td.form-field > input#id_form-0-email')
-        self.assertTag(d, '#formset tbody > tr > td.form-field > input#id_form-1-check')
-        self.assertTag(d, '#formset tbody > tr > td.form-field > input#id_form-1-ORDER')
-        self.assertTag(d, '#formset tbody > tr > td.form-field > input#id_form-1-DELETE')
+        self.assertAttr(d, '#formset > div > input#id_form-TOTAL_FORMS', 'value', '2')  # noqa
+        self.assertTag(d, '#formset tbody > tr > td.form-field > input#id_form-0-email')  # noqa
+        self.assertTag(d, '#formset tbody > tr > td.form-field > input#id_form-1-check')  # noqa
+        self.assertTag(d, '#formset tbody > tr > td.form-field > input#id_form-1-ORDER')  # noqa
+        self.assertTag(d, '#formset tbody > tr > td.form-field > input#id_form-1-DELETE')  # noqa
 
     def test_custom(self):
         r = self.client.get('/custom')
@@ -89,8 +90,8 @@ class FormicaTestCase(TestCase):
 
         self.assertTag(d, '#fields > div.void')
 
-        self.assertTag(d, '#field div.super-wrapper > div.form-field input#id_email')
-        self.assertTag(d, '#field div.super-wrapper > div.form-field input#id_check')
+        self.assertTag(d, '#field div.super-wrapper > div.form-field input#id_email')  # noqa
+        self.assertTag(d, '#field div.super-wrapper > div.form-field input#id_check')  # noqa
 
     def test_errors(self):
         r = self.client.get('/errors')

@@ -2,18 +2,17 @@
 #
 # This file is part of Formica released under the FreeBSD license.
 # See the LICENSE for more information.
-from __future__ import (print_function, division, absolute_import, unicode_literals)
+from __future__ import (print_function, division, absolute_import, unicode_literals)  # noqa
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
+from formica.tests import views
 
-urlpatterns = patterns(
-    'formica.tests.views',
-
-    url(r'^$', 'simple_form', name='simple_form'),
-    url(r'^raises$', 'raises', name='raises'),
-    url(r'^override$', 'override', name='override'),
-    url(r'^table$', 'table', name='table'),
-    url(r'^custom$', 'custom', name='custom'),
-    url(r'^errors$', 'errors', name='errors'),
+urlpatterns = (
+    url(r'^$', views.simple_form, name='simple_form'),
+    url(r'^raises$', views.raises, name='raises'),
+    url(r'^override$', views.override, name='override'),
+    url(r'^table$', views.table, name='table'),
+    url(r'^custom$', views.custom, name='custom'),
+    url(r'^errors$', views.errors, name='errors'),
 )

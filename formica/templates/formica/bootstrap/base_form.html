@@ -2,7 +2,8 @@
 {% load i18n formica %}
 
 {% block field_label %}
-<label for="{{ field.id_for_label }}" {% if hide_label %}class="sr-only"{% endif %}>{{ field.label }}</label>
+<label for="{{ field.id_for_label }}" {% if hide_label %}class="sr-only"{% endif %}>{{ field.label }}
+{% if field.field.required %}<strong class="text-danger">*</strong>{% endif %}</label>
 {% endblock field_label %}
 
 {# Form errors #}
@@ -103,7 +104,9 @@
 
 {% block _widget_radioselect %}
 {% for choice in field.field.choices %}{% if not is_inline %}<div class="radio">{% endif %}
-  <label{% if is_inline %} class="radio-inline"{% endif %}><input type="radio" value="{{ choice.0 }}" name="{{ field.name }}" id="{{ field.auto_id }}_{{ forloop.counter0 }}" />
+  <label{% if is_inline %} class="radio-inline"{% endif %}><input type="radio"
+  value="{{ choice.0 }}" name="{{ field.name }}" id="{{ field.auto_id }}_{{ forloop.counter0 }}"
+  {% if choice.0 = field.field.initial %}checked="checked"{% endif %} />
   {{ choice.1 }}</label>
 {% if not is_inline %}</div>{% endif %}{% endfor %}
 {% endblock _widget_radioselect %}
@@ -111,13 +114,14 @@
 
 {% block _widget_checkboxselectmultiple %}
 {% for choice in field.field.choices %}{% if not is_inline %}<div class="checkbox">{% endif %}
-  <label{% if is_inline %} class="checkbox-inline"{% endif %}><input type="checkbox" value="{{ choice.0 }}" name="{{ field.name }}" id="{{ field.auto_id }}_{{ forloop.counter0 }}" />
+  <label{% if is_inline %} class="checkbox-inline"{% endif %}><input type="checkbox"
+  value="{{ choice.0 }}" name="{{ field.name }}" id="{{ field.auto_id }}_{{ forloop.counter0 }}"
+  {% if choice.0 in field.field.initial %}checked="checked"{% endif %} />
   {{ choice.1 }}</label>
 {% if not is_inline %}</div>{% endif %}{% endfor %}
 {% endblock _widget_checkboxselectmultiple %}
 
 
 {% block _widget_checkbox %}
-<div class="checkbox"><label><input type="checkbox" id="{{ field.id_for_label }}" name="{{ field.name }}" />
-{{ field.label }}</label></div>
+<div class="checkbox"><label>{{ field }} {{ field.label }}</label></div>
 {% endblock _widget_checkbox %}

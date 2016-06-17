@@ -3,7 +3,7 @@
 
 {# Main form block #}
 {% block form %}{% if with_csrf %}{% csrf_token %}{% endif %}
-{% useblock "form_errors" %}
+{% if with_errors|default_if_none:True %}{% useblock "form_errors" %}{% endif %}
 {{ contents }}{% endblock form %}
 
 
@@ -70,5 +70,5 @@
 {# Field label #}
 {% block field_label %}
 <label for="{{ field.id_for_label }}"
-{% if field.field.required %}class="required"{% endif %}>{{ field.label }}</label>
+{% if field.field.required or label_class %}class="{{ label_class }} {% if field.field.required %}required{% endif %}"{% endif %}>{{ field.label }}</label>
 {% endblock field_label %}
