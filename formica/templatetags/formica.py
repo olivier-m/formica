@@ -117,7 +117,7 @@ class UseTemplateNode(template.Node):
 
         # If it's just the name, resolve into template
         if isinstance(template, str):
-            template = get_template(template)
+            template = get_template(template).template
 
         # Add this templates blocks as the first
         local_blocks = dict(
