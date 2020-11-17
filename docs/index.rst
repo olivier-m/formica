@@ -47,7 +47,7 @@ Rendering the form is as simple as:
   {% load formica %}
 
   <form method="post">
-    {% form "formica/base_form.html" %}
+    {% form "formica/base_form.html" my_form %}
       {% fields %}
     {% endform %}
 
