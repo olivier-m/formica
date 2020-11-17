@@ -8,7 +8,7 @@ from contextlib import contextmanager
 import re
 
 from django import forms
-from django.template.base import parse_bits
+from django.template.library import parse_bits
 from django.template.loader import get_template
 from django.template.loader_tags import BlockNode, BlockContext, ExtendsNode, BLOCK_CONTEXT_KEY
 from django import template
