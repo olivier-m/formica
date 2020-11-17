@@ -76,7 +76,18 @@ def use_template(klass):
                 '"{0}" tag takes at least 1 argument: the template name'.format(tag_name)
             )
 
-        args, kwargs = parse_bits(parser, bits, ['template_name'], '', '', None, False, 'form')
+        args, kwargs = parse_bits(
+            parser=parser,
+            bits=bits,
+            params=["template_name"],
+            varargs="",
+            varkw="",
+            defaults=None,
+            kwonly={},
+            kwonly_defaults={},
+            takes_context=False,
+            name="form"
+        )
 
         nodelist = parser.parse(('end{0}'.format(tag_name),))
         template_name = args.pop(0)
