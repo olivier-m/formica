@@ -8,11 +8,10 @@ from contextlib import contextmanager
 import re
 
 from django import forms
-from django.template.base import parse_bits
+from django.template.library import parse_bits
 from django.template.loader import get_template
 from django.template.loader_tags import BlockNode, BlockContext, ExtendsNode, BLOCK_CONTEXT_KEY
 from django import template
-from django.utils import six
 
 
 register = template.Library()
@@ -77,7 +76,18 @@ def use_template(klass):
                 '"{0}" tag takes at least 1 argument: the template name'.format(tag_name)
             )
 
-        args, kwargs = parse_bits(parser, bits, ['template_name'], '', '', None, False, 'form')
+        args, kwargs = parse_bits(
+            parser=parser,
+            bits=bits,
+            params=["template_name"],
+            varargs="",
+            varkw="",
+            defaults=None,
+            kwonly={},
+            kwonly_defaults={},
+            takes_context=False,
+            name="form"
+        )
 
         nodelist = parser.parse(('end{0}'.format(tag_name),))
         template_name = args.pop(0)
@@ -106,8 +116,8 @@ class UseTemplateNode(template.Node):
             blocks = BlockContext()
 
         # If it's just the name, resolve into template
-        if isinstance(template, six.string_types):
-            template = get_template(template)
+        if isinstance(template, str):
+            template = get_template(template).template
 
         # Add this templates blocks as the first
         local_blocks = dict(
@@ -211,7 +221,7 @@ def field(context, field, block_name='field', **kwargs):
     if block is None:
         raise ValueError('Block "{0}" does not exist.'.format(block_name))
 
-    if isinstance(field, six.string_types):
+    if isinstance(field, str):
         if field not in form.fields:
             raise ValueError('Field "{0}" does not exist'.format(field))
         field = form[field]
@@ -244,7 +254,7 @@ def fields(context, field_list='', block_name='fields', **kwargs):
     # Make field list
     if isinstance(field_list, (list, tuple)):
         # List could be a list of strings or field instances...
-        _list = [isinstance(x, six.string_types) and x or x.name for x in field_list]
+        _list = [isinstance(x, str) and x or x.name for x in field_list]
     else:
         # ... or a space separated list of names
         field_list = field_list.strip()
